@@ -1,18 +1,13 @@
 #!/usr/bin/env bash
-# Define variables
-KEY_NAME="school"
-PASSPHRASE="betty"
-BITS=4096
-
 # Remove any existing key files
 rm -f "$KEY_NAME" "$KEY_NAME.pub"
 
 # Generate the RSA key pair with encryption
-ssh-keygen -t rsa -b "$BITS" -f "$KEY_NAME" -N "$PASSPHRASE" -m PEM -q
+ssh-keygen -t rsa -b "4096" -f "school" -N "betty" -m PEM -q
 
 # Verify encryption
-if grep -q "ENCRYPTED" "$KEY_NAME"; then
-    echo "RSA key pair '$KEY_NAME' created successfully and is encrypted."
+if grep -q "ENCRYPTED" "school"; then
+    echo "RSA key pair 'school' created successfully and is encrypted."
 else
     echo "Error: Private key is not encrypted!" >&2
     exit 1
