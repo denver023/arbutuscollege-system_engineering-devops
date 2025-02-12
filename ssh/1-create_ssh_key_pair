@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
-# Generate the RSA key pair
+# Generate the RSA key pair with encryption
 ssh-keygen -t rsa -b 4096 -f school -N "betty" -q
-echo "RSA key pair '$KEY_NAME' created successfully."
+
+# Verify encryption
+if grep -q "ENCRYPTED" "school"; then
+    echo "RSA key pair 'school' created successfully and is encrypted."
+else
+    echo "Error: Private key is not encrypted!" >&2
+    exit 1
+fi
