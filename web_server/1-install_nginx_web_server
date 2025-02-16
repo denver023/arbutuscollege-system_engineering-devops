@@ -1,35 +1,20 @@
 #!/usr/bin/env bash
 # Configures Nginx to serve a page containing "Holberton School"
 
-# First backup original config
-cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
-
 # Create a basic HTML file with the required content
 echo "Holberton School" > /var/www/html/index.html
 
-# Ensure permissions are correct
-chown -R www-data:www-data /var/www/html
-chmod -R 755 /var/www/html
-
-# Configure nginx to serve on port 80
+# Configure nginx default site
 echo "server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-    
+    listen 80;
+    listen [::]:80;
     root /var/www/html;
-    index index.html index.htm index.nginx-debian.html;
-
-    server_name _;
-
+    index index.html;
     location / {
-        try_files \$uri \$uri/ =404;
+        return 200;
     }
 }" > /etc/nginx/sites-available/default
 
-# Remove default symbolic link and create new one
-rm -f /etc/nginx/sites-enabled/default
-ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
-
-# Test nginx configuration
-nginx -t
+# Create symbolic link if it doesn't exist
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 
