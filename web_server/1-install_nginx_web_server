@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Configures Nginx to serve a page containing "Holberton School"
+
+# Create a basic HTML file with the required content
+echo "Holberton School" > /var/www/html/index.html
+
+# Make sure nginx config is clean and correct
+echo "server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /var/www/html;
+    index index.html index.htm index.nginx-debian.html;
+    server_name _;
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+}" > /etc/nginx/sites-available/default
+
+# Create symbolic link (if it doesn't exist)
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
