@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # This script installs and configures Nginx to serve a custom page
 
 # Ensure Nginx is installed
@@ -31,11 +31,10 @@ chmod 644 /var/www/html/index.html
 service nginx restart
 
 # Check if Nginx returns HTTP 200 status
-STATUS_CODE=$(curl -o /dev/null -s -w "%{http_code}" http://localhost)
+STATUS_CODE=$(curl -o /dev/null -s -w "%{http_code}" http://127.0.0.1 || echo 000)
 if [ "$STATUS_CODE" -eq 200 ]; then
     echo "Nginx is serving the page correctly with status 200."
 else
     echo "Error: Nginx did not return status 200. Returned: $STATUS_CODE"
     exit 1
 fi
-
