@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
-# Configures Nginx to serve a page containing "Holberton School"
 
-# Create a basic HTML file with the required content
-echo "Holberton School" > /var/www/html/index.html
+# Ensure Nginx is installed
+if ! command -v nginx &> /dev/null; then
+    apt update -y
+    apt install -y nginx
+fi
 
-# Configure nginx default site
+# Ensure Nginx is running
+service nginx restart
+
+# Create a custom HTML page with the required content
+echo 'Holberton School' > /var/www/html/index.html
+
+# Configure Nginx default site
 echo "server {
     listen 80 default_server;
     listen [::]:80 default_server;
@@ -14,4 +22,19 @@ echo "server {
 
 # Create symbolic link if it doesn't exist
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+# Ensure proper file permissions
+chmod 644 /var/www/html/index.html
+
+# Restart Nginx to apply changes
+service nginx restart
+
+# Check if Nginx returns HTTP 200 status
+STATUS_CODE=$(curl -o /dev/null -s -w "%{http_code}" http://localhost)
+if [ "$STATUS_CODE" -eq 200 ]; then
+    echo "Nginx is serving the page correctly with status 200."
+else
+    echo "Error: Nginx did not return status 200. Returned: $STATUS_CODE"
+    exit 1
+fi
 
