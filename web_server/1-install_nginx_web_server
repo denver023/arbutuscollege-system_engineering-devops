@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # This script installs and configures Nginx to serve a custom page
 
 # Ensure Nginx is installed
