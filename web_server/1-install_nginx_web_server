@@ -6,12 +6,13 @@ echo "Holberton School" > /var/www/html/index.html
 
 # Configure nginx default site
 echo "server {
-    listen 80;
-    listen [::]:80;
+    listen 80 default_server;
+    listen [::]:80 default_server;
     root /var/www/html;
     index index.html;
     location / {
-        return 200;
+        return 200 'Holberton School';
+        add_header Content-Type text/plain;
     }
 }" > /etc/nginx/sites-available/default
 
