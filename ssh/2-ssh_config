@@ -4,5 +4,3 @@ Host myserver
     User ubuntu
     IdentityFile ~/.ssh/school
     PasswordAuthentication no
-    IdentitiesOnly yes
-
